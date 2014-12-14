@@ -1,4 +1,10 @@
 Revision history for Perl extension Catalyst::View::Sass.
 
+0.002    Sun Dec 06 19:10:00 2014
+        - Switch to Text::Sass which uses libsass
+  Gerard Ribugent Navarro, C<ribugent+github@gmail.com>
+
 0.001    Sat Oct 23 12:00:00 2010
         - first release
+  Bjorn-Olav Strand, C<bolav@cpan.org>
+
