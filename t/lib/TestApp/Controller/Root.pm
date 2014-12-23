@@ -4,7 +4,7 @@ __PACKAGE__->config(namespace => '');
 
 sub default : Private {
     my ($self, $c) = @_;
-    warn "P default";
+
     $c->response->redirect($c->uri_for('test'));
 }
 
