@@ -4,7 +4,7 @@ __PACKAGE__->config(namespace => '');
 
 sub default : Private {
     my ($self, $c) = @_;
-
+    warn "P default";
     $c->response->redirect($c->uri_for('test'));
 }
 
@@ -12,18 +12,18 @@ sub test : Local {
     my ($self, $c) = @_;
 
     $c->stash->{message} = ($c->request->param('message') || $c->config->{default_message});
-    $c->stash->{template} = $c->request->param('template');
+    $c->stash->{template} = $c->request->param('template') || 'test.scss';
 }
 
 sub test_includepath : Local {
     my ($self, $c) = @_;
     $c->stash->{message} = ($c->request->param('message') || $c->config->{default_message});
     $c->stash->{template} = $c->request->param('template');
-    if ( $c->request->param('additionalpath') ){
+    if ($c->request->param('additionalpath')) {
         my $additionalpath = Path::Class::dir($c->config->{root}, $c->request->param('additionalpath'));
         $c->stash->{additional_template_paths} = ["$additionalpath"];
     }
-    if ( $c->request->param('addpath') ){
+    if ($c->request->param('addpath')) {
         my $additionalpath = Path::Class::dir($c->config->{root}, $c->request->param('addpath'));
         my $view = 'TestApp::View::Sass::' . ($c->request->param('view') || $c->config->{default_view});
         no strict "refs";
@@ -48,7 +48,7 @@ sub test_render : Local {
 sub test_msg : Local {
     my ($self, $c) = @_;
     my $tmpl = $c->req->param('msg');
-    
+
     $c->stash->{message} = $c->view('Sass::AppConfig')->render($c, \$tmpl);
     $c->stash->{sass} = 'test.sass';
 }

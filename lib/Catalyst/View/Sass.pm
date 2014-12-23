@@ -38,10 +38,12 @@ Catalyst::View::Sass - Sass View Class
 sub new {
     my ($class, $c, $arguments) = @_;
     my $config = {
-        $c->debug()? (
+        $c->debug()
+        ? (
             output_style    => SASS_STYLE_NESTED,
             source_comments => 1
-        ) : (),
+            )
+        : (),
         %{$class->config},
         %{$arguments}
     };
@@ -79,9 +81,10 @@ sub _coerce_paths {
 
 sub process {
     my ($self, $c) = @_;
+    use Data::Dumper;
+    print Dumper($c->stash, $c->req->arguments);
 
-    my $sass = $c->stash->{sass}
-        || join('/', @{$c->req->arguments});
+    my $sass = $c->stash->{sass} // $c->stash->{template} // join('/', @{$c->req->arguments});
 
     unless (defined $sass) {
         $c->log->debug('No template specified for rendering') if $c->debug;
